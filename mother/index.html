@@ -1,0 +1,241 @@
+<html>
+<head>
+	<meta name="viewport" content="width=750,user-scalable=no" />
+	<title>我的时光、你的白发</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+		#container{
+			position: fixed;
+			width: 100%;
+			height: 100%;
+		}
+		#code{
+			position: fixed;
+			display: none;
+			top: 0;
+			left: 0 ;
+			width: 100%;
+			height: 100%;
+			overflow-y: auto;
+		}
+		#playBtn{
+			position: fixed;
+			bottom: 50px;
+			left:300px;
+			text-align: center;
+			line-height: 150px;
+			font-size: 30px;
+			color: #fff;
+			width: 150px;
+			height: 150px;
+			background: url(img/playBtn.png)no-repeat;
+			background-size:100% 100%;
+			border-radius: 50%;
+			-webkit-touch-callout:none;
+			-webkit-user-select:none;
+			-khtml-user-select:none;
+			-moz-user-select:none;
+			-ms-user-select:none;
+			user-select:none;
+		}
+		img{width: 100%;height: 100%;}
+		@keyframes rotate{
+		0%{
+			transform: rotate(0);
+		  }
+		100%{
+			transform:rotate(360deg);
+		}
+		}
+		.audio_icon{
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			z-index: 200;
+			width: 100px;
+			height: 100px;
+		}
+		.rotate{
+			transition: 0.5s;
+			animation: rotate 2s linear infinite;  /*开始动画后无限循环，用来控制rotate*/
+		}
+		.again{
+			position: fixed;
+			display: none;
+			width: 180px;
+			height: 137.8px;
+			left: 20px;
+			top: 20px;
+		}
+		.Scode{
+			position: fixed;
+			bottom: 21%;
+			width: 220px;
+			height: 220px;
+			left: 292px;
+		}
+		.Result_text{
+			background: #fff;
+			padding-top: 20%;
+			padding-bottom: 5%;
+			border-radius: 1rem;
+			width: 100%;
+			margin: 0 auto;
+			font-size: 1.2rem;
+		}
+		.Result_text_con{
+			padding: 5%;
+			color: #12910b;
+			font-size: 1.1rem;
+			line-height: 2rem;
+		}
+		.Result_center{
+			display: block;
+			color: #000;
+			text-align: center;
+			padding: 5% 0;
+		}
+		.pop_bg{
+			display: block;
+			background: #000;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0.9;
+		}
+		.pulic_content{
+			display: block;
+			position: fixed;
+			width: 70%;
+			padding: 2%;
+			left: 15%;
+			top: 30%;
+			z-index: 200;
+		}
+		.pulic_messge{
+			display: block;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			z-index: 100;
+			top: 0;
+			left: 0;
+			z-index: 500;
+		}
+		/* loading弹窗 */
+		.loading {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 9999;
+		}
+		.loading_bg {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    background: #000;
+		    width: 100%;
+		    height: 100%;
+		    z-index: -1;
+		    opacity: .9;
+		}
+		.loading_box {
+		    background: #fff;
+		    width: 46%;
+		    height: 220px;
+		    position: absolute;
+		    left: 27%;
+		    top: 40%;
+		    border-radius: 5px;
+		}
+		.loading_gif {
+		    width: 100px;
+		    margin: 0 auto;
+		    padding-top: 10%;
+			font-size: 0;
+		}
+		.loading p {
+		    text-align: center;
+		    font-size: 24px;
+		}
+    </style>
+</head>
+
+<body>
+    <audio src="files/motherBGM.mp3" preload="auto" loop="loop" id="audio"></audio>
+	<div class="audio_icon rotate" id="audio_icon"><img src="img/audio_icon.png"></div>
+    <canvas width="750" height="1260" id="container"></canvas>
+	<div id="code" style="display: none;"><img src="img/codeBg.jpg" ><img src="img/code.png" class="Scode"></div>
+	<div class="again"><img src="img/again.png" ></div>
+	<div id="playBtn"></div>
+    <div class="collection" style="display:none"></div>
+	<!-- 加载gif，判断显示隐藏即可 -->
+	<div class="loading" style="display: block;" id="loading_gif">
+		<div class="loading_bg"></div>
+		<div class="loading_box">
+			<div class="loading_gif"><img src="img/loading.gif" style="height: auto;"></div>
+			<p>活动正在加载中...</p>
+		</div>
+	</div>
+	<!-- 信息提示1 -->
+	<div class="pulic_messge" style="display: none;" id="null_messge">
+		<div class="pop_bg"></div>
+		<div class="pulic_content" style="top: 30%;"> 
+			<div class="Result_text" style="padding-top: 5%;font-size: 26px;background: #8fde8c;">
+				<div class="Result_center" style=" border-radius: 0.5rem;">
+					<p>请竖屏浏览~</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery-2.1.4.min.js" ></script>
+    <script src="js/index.umd.js"></script>
+    <script src="js/index.js"></script>
+</body>
+<script type="text/javascript">
+	$(".again").click(function(){window.location=window.location});
+	window.onload=function(){
+		pipCanvas.init();
+	}
+	$("#audio_icon").click(function(){
+		if($(this).hasClass("rotate")){
+			document.getElementById("audio").pause();
+			$(".audio_icon").children("img").prop("src","img/audio_icon1.png");
+			$(".audio_icon").removeClass("rotate");
+		}else{
+			document.getElementById("audio").play();
+			$(".audio_icon").children("img").prop("src","img/audio_icon.png");
+			$(".audio_icon").addClass("rotate");
+		}
+	})
+	window.addEventListener('load', function(){
+		window.onorientationchange = function(){
+			if(window.orientation==90||window.orientation==-90){
+				$("#null_messge").show();
+			}else{
+				window.location = window.location;
+			}
+		}
+	});
+	//长按事件
+    var time = 0; //初始化起始时间
+    $("#code").on("touchstart", function(e) {
+      e.stopPropagation();
+      time = setTimeout(function() {
+        showAlert();
+      }, 500); //这里设置长按响应时间
+    });
+    $("#code").on("touchend", function(e) {
+      e.stopPropagation();
+      clearTimeout(time);
+    });
+    function showAlert() {
+      alert("你长按了");
+    }
+</script>
+</html>				

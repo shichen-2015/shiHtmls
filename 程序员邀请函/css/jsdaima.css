@@ -1,0 +1,10 @@
+*{ margin:0px; padding:0px; box-sizing:border-box; -webkit-tap-highlight-color:rgba(0,0,0,0);}  
+html{ min-width:320px; max-width:640px; margin:0 auto;}  
+html , body{ display:block; width:100%; height:100%;}  
+body{ font-family:"PingFangSC-Regular","sans-serif","STHeitiSC-Light","微软雅黑","Microsoft YaHei";  
+        -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; touch-callout:none;  
+}  
+#btn{ width:50px; height:50px; line-height:50px; text-align:center; color:#fff; border-radius:50%; background-color:#f00; cursor:pointer; position:absolute; left:50%; margin-left:-25px; bottom:20px;}  
+#showImg{ width:100%; height:100%; overflow:hidden; position:relative;}  
+#showImg img{ position:absolute;}  
+.showDh{ -webkit-transition:all linear .1s; transition:all linear .1s;}
